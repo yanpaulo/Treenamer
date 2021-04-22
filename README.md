@@ -17,3 +17,7 @@ Useful for renaming projects items including directory, file names and contents 
 - string: string to be replaced
 - replacement: replacement for the string
 - -c (optional): also finds and replaces file contents
+
+# Example
+    trename "C:\Projects\MyProjectName" "MyProjectName" "SuperProject" -c
+Note that "C:\Projects\MyProjectName" will also be renamed to "C:\Projects\SuperProject" currently there's no way to turn off this behavior.
