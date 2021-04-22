@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Treenamer": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Users\\yanpa\\source\\repos\\archetype-dotnet-api-mongo\" MyCompanyName Midway -c"
+    }
+  }
+}
