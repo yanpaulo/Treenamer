@@ -17,6 +17,8 @@ namespace Treenamer
 
         public bool ReplaceContent { get; private set; }
 
+        private int Counter = 0;
+
         public RecursiveReplacer(string rootDirectory, string find, string replace, bool replaceContent)
         {
             RootDirectory = rootDirectory;
@@ -29,7 +31,8 @@ namespace Treenamer
         {
             Console.WriteLine("Starting recursive replace.");
             RecursiveReplace(RootDirectory);
-            Console.WriteLine("Done");
+            Console.WriteLine("Done!!!");
+            Console.WriteLine("Occurencies: "+ Counter +"");
         }
 
         private void RecursiveReplace(string directory)
@@ -44,7 +47,7 @@ namespace Treenamer
                     continue;
                 }
                 var name = Path.GetFileName(path);
-                var newName = name.Replace(Find.ToLower(), Replace, StringComparison.InvariantCultureIgnoreCase);
+                var newName = name.Replace(Find, Replace, StringComparison.InvariantCulture);
                 var newPath = Path.Combine(Path.GetDirectoryName(path), newName);
 
                 if (attributes.HasFlag(FileAttributes.Directory))
@@ -52,7 +55,8 @@ namespace Treenamer
                     if (path != newPath)
                     {
                         Console.WriteLine($"Renaming directory {path} to {newPath}.");
-                        Directory.Move(path, newPath); 
+                        Directory.Move(path, newPath);
+                        Counter++;
                     }
                     RecursiveReplace(newPath);
                 }
@@ -62,12 +66,14 @@ namespace Treenamer
                     {
                         Console.WriteLine($"Renaming file {path} to {newPath}.");
                         File.Move(path, newPath);
+                        Counter++;
                     }
                     if (ReplaceContent)
                     {
                         Console.WriteLine($"Replacing content on file {newPath}.");
                         var content = File.ReadAllText(newPath);
-                        File.WriteAllText(newPath, content.Replace(Find, Replace, StringComparison.InvariantCultureIgnoreCase));
+                        File.WriteAllText(newPath, content.Replace(Find, Replace, StringComparison.InvariantCulture));
+                        Counter++;
                     }
                 }
             }
