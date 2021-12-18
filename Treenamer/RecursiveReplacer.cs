@@ -44,8 +44,10 @@ namespace Treenamer
                     continue;
                 }
                 var name = Path.GetFileName(path);
-                var newName = name.Replace(Find.ToLower(), Replace, StringComparison.InvariantCultureIgnoreCase);
+                var newName = name.Replace(Find, Replace);
                 var newPath = Path.Combine(Path.GetDirectoryName(path), newName);
+
+                Console.WriteLine($"\n\tName: {name}\n\tNewName: {newName}\n\tPath:{path}\n\tNewPath: {newPath}\n");
 
                 if (attributes.HasFlag(FileAttributes.Directory))
                 {
@@ -67,7 +69,7 @@ namespace Treenamer
                     {
                         Console.WriteLine($"Replacing content on file {newPath}.");
                         var content = File.ReadAllText(newPath);
-                        File.WriteAllText(newPath, content.Replace(Find, Replace, StringComparison.InvariantCultureIgnoreCase));
+                        File.WriteAllText(newPath, content.Replace(Find, Replace));
                     }
                 }
             }
